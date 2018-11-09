@@ -13,7 +13,7 @@ public class BinaryHeap {
         try{
             arr[size] = n; //add n to the end of the array, then increment size
             size++;
-            siftup(size-1);
+            siftup();
         }
         catch (Exception e){
             //if out of bounds, grow array and call add again
@@ -22,13 +22,17 @@ public class BinaryHeap {
         }
     }
 
-    private void siftup(int index) {
-        if (index > 0){
-            int parent = (index-1)/2;
-            boolean lessThan = comparePC(parent, index);
+    private void siftup() {
+        int last = size-1;
+        while(last > 0){
+            int parent = (last-1)/2;
+            boolean lessThan = comparePC(parent, last);
             if(lessThan){ //if true, swap them and call siftup with the new index
-                swap(parent, index);
-                siftup(parent);
+                swap(parent, last);
+                last = parent;
+            }
+            else{
+                break;
             }
         }
     }
@@ -46,69 +50,67 @@ public class BinaryHeap {
         size--;
         if(size > 0) {
             arr[0] = arr[size - 1]; //move last leaf to root position
-            //decrement size because we removed one; effectively removes the last element as well, but it is in pos 0
-            //as well so its ok
-            arr[size] = 0;
-//            size--;
-            siftdown(0);
+            siftdown();
         }
-
         return n;
     }
 
-    private void siftdown(int n){
+    private void siftdown(){
+        int parent = 0;
+        int childL = parent*2 + 1;
+        while(childL < size){
+            int min = childL; //set the min value to be the left child for now (default in case there is no right child)
+            int childR = childL + 1;
+            if(childR < size)
+                min += compareLR(childL, childR);
+            if (arr[parent] > arr[min]) {
+                swap(parent, min); //swap parent and child
+                parent = min; //set index of parent to index of child
+                childL = parent*2 + 1;
+            }
+            else{
+                break;
+            }
+        }
+
+
+
         //n is the index of the item we are sifting down
-        //at the start, n == 0
-       int childL = n*2 + 1;
-       int childR = childL+1;
-       int min = childL; //set the min value to be the left child for now (default in case there is no right child)
-
-       if(childL < size) {
-           if (childR < size) { //if there is a right child,
-               min = compareLR(childL, childR); //changes min to index of smaller child
-           }
-
-           if (arr[n] > arr[min]) {
-               swap(n, min); //swap parent and child
-               n = min; //set index of parent to index of child
-               siftdown(n);
-           }
-       }
+        //the first time siftdown is called, n == 0
+//       int childL = n*2 + 1;
+//       int childR = childL+1;
+//       int min = childL; //set the min value to be the left child for now (default in case there is no right child)
+//
+//       if(childL < size) {
+//           if (childR < size) { //if there is a right child,
+//               min = compareLR(childL, childR); //changes min to index of smaller child
+//           }
+//
+//           if (arr[n] > arr[min]) {
+//               swap(n, min); //swap parent and child
+//               n = min; //set index of parent to index of child
+//               siftdown(n);
+//           }
+//       }
     }
 
 
     private void growArray() {
-//        System.out.println("size: " + size);
-//        System.out.println("arr.length: " + arr.length);
         int[] newArray = new int[arr.length * 2];
         int newIndex = 0;
         for (int i = 0; i < arr.length; i++) {
             int temp = arr[i];
             newArray[newIndex] = temp;
-//            System.out.println("inside grow array for loop");
-//            System.out.println("i: " + i);
-//            System.out.println("newIndex: " + newIndex);
-//            System.out.println("arr[i]" + arr[i]);
-//            System.out.println("newArray[newIndex]: " + newArray[newIndex]);
             newIndex++;
         }
-//        System.out.println("ended for loop");
-//        System.out.println("arr");
-//        for (int j = 0; j < size; j++) {
-//            System.out.println(j + arr[j]);
-//        }
-//        System.out.println("newArray");
-//        for (int j = 0; j < newArray.length; j++) {
-//            System.out.println(j + newArray[j]);
-//        }
         arr = newArray;
     }
 
     private int compareLR(int l, int r){
             if(arr[l] <= arr[r])
-                return l;
+                return 0;
             else{ //if arr[r] < arr[l]
-                return r;
+                return 1;
             }
         }
 
@@ -118,13 +120,6 @@ public class BinaryHeap {
             return true;
         else
             return false;
-    }
-
-
-    public void printArray(){
-        for(int i = 0; i < size; i++){
-            System.out.println(arr[i]);
-        }
     }
 
 }
