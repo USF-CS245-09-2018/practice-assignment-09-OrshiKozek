@@ -11,8 +11,6 @@ public class BinaryHeap {
 
     public void add(int n){
         try{
-            //first add to the end of the array, using size
-            //if out of bounds, grow array and call add again
             arr[size] = n; //add n to the end of the array, then increment size
             size++;
             siftup(size-1);
@@ -33,21 +31,6 @@ public class BinaryHeap {
                 siftup(parent);
             }
         }
-
-
-
-
-
-
-
-
-//        int parentIndex = (index - 1) / 2;
-//        if (parentIndex != 0) {
-//            if (arr[parentIndex] > arr[index]) {//if the parent is greater, then swap places
-//                swap(parentIndex, index);
-//                siftup(parentIndex);
-//            }
-//        }
     }
 
 
@@ -91,34 +74,6 @@ public class BinaryHeap {
                siftdown(n);
            }
        }
-//
-//
-//        if(arr[n] < arr[childL] && arr[n] < childR){ //if it is in the correct position, stop
-//            return;
-//        }
-//        int minVal = Math.min(arr[childL], arr[childR]); //find the smaller of the two children
-//        if(minVal == arr[childL]) { //if the left one is the smallest child
-//            swap(arr, n, childL);
-//            siftdown(childL); //now the parent is at the child's index, call recursively using the new index
-//        }
-//        else{
-//            //if minval = arr[childR]
-//            swap(arr, n, childR);
-//            siftdown(childR);
-//        }
-
-
-
-
-
-//        int child = parent * 2 + 1;
-//        if(arr[child + 1] < arr[child])
-//            child++; //if the right child is less than the left child, then the index child points to the lesser child (r)
-//        if(arr[parent] > arr[child])
-//            swap(arr, child, parent);
-//        siftdown(child);
-
-
     }
 
 
