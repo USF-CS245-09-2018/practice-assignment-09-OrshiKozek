@@ -60,12 +60,13 @@ public class BinaryHeap {
 
     public int remove(){
         int n = arr[0];//store root
-        if(size > 1) {
+        size--;
+        if(size > 0) {
             arr[0] = arr[size - 1]; //move last leaf to root position
             //decrement size because we removed one; effectively removes the last element as well, but it is in pos 0
             //as well so its ok
-            arr[size - 1] = 0;
-            size--;
+            arr[size] = 0;
+//            size--;
             siftdown(0);
         }
 
