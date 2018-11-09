@@ -2,7 +2,7 @@
 
 See assignment details on Canvas.
 
-The runtime for this program varies between 15ms and 35 ms. Sometimes it runs under 20,
-as required, but sometimes it does not run as quickly as needed.
-If the runtime is too high, please run it again, as it depends somewhat on the data set. A rerun of the program
-might give a better runtime.
+A previous version of my code used recursion to sift up and down in the tree. The runtime sometimes went over
+the desired 20ms, so I decided to rewrite the functions using while loops instead. This way the runtime was faster
+than with recursion. Though personally I like recursion better, I realize that in the long run, it is less
+efficient than using loops.
